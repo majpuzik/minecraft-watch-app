@@ -531,8 +531,9 @@ for (let i = 0; i < clockBlockCount; i++) {
 
     const block = document.createElement('div');
     block.className = 'block';
-    block.style.left = (x - blockWidth/2) + 'px';
-    block.style.top = (y - blockWidth/2) + 'px';
+    // Posun o 1/2 výšky kostičky směrem severozápad (vlevo nahoru)
+    block.style.left = (x - blockWidth) + 'px';
+    block.style.top = (y - blockWidth) + 'px';
     block.style.transform = `rotate(${angle}deg)`;
     watch.appendChild(block);
     blocks.push(block);

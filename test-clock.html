@@ -111,8 +111,9 @@
                 block.className = 'block';
                 block.style.width = blockWidth + 'px';
                 block.style.height = blockWidth + 'px';
-                block.style.left = (x - blockWidth/2) + 'px';
-                block.style.top = (y - blockWidth/2) + 'px';
+                // Posun o 1/2 výšky kostičky směrem severozápad (vlevo nahoru)
+                block.style.left = (x - blockWidth) + 'px';
+                block.style.top = (y - blockWidth) + 'px';
                 block.style.transform = `rotate(${angle}deg)`;
 
                 // Zvýraznit každou 12. kostičku
