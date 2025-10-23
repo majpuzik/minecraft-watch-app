@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kód - Minecraft Hodinky</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .qr-wrapper {
+            background: white;
+            padding: 20px;
+            border: 3px solid #000;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        canvas {
+            display: block;
+        }
+        .url {
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        .instructions {
+            text-align: left;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        .instructions ol {
+            padding-left: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .download-btn {
+            background: #2196F3;
+        }
+        .download-btn:hover {
+            background: #0b7dda;
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">⛏️</div>
+        <h1>Minecraft Hodinky</h1>
+        <p class="subtitle">Naskenujte pro instalaci PWA</p>
+
+        <div class="qr-wrapper">
+            <canvas id="qrcode"></canvas>
+        </div>
+
+        <div class="url">
+            https://majpuzik.github.io/minecraft-watch-app/
+        </div>
+
+        <div class="instructions">
+            <strong>📱 Jak nainstalovat:</strong>
+            <ol>
+                <li>Naskenujte QR kód iPhone kamerou</li>
+                <li>Otevře se Safari s aplikací</li>
+                <li>Klikněte Sdílet → "Přidat na plochu"</li>
+                <li>Aplikace je nainstalovaná!</li>
+            </ol>
+        </div>
+
+        <div class="no-print">
+            <button onclick="window.print()">🖨️ Vytisknout</button>
+            <button class="download-btn" onclick="downloadQR()">💾 Stáhnout QR</button>
+        </div>
+
+        <p style="margin-top: 30px; color: #999; font-size: 12px;">
+            🎮 PWA hra pro Apple Watch & iPhone<br>
+            🤖 Vytvořeno pomocí Claude Code
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        const url = 'https://majpuzik.github.io/minecraft-watch-app/';
+        const canvas = document.getElementById('qrcode');
+
+        QRCode.toCanvas(canvas, url, {
+            width: 300,
+            margin: 2,
+            errorCorrectionLevel: 'H',
+            color: {
+                dark: '#000000',
+                light: '#ffffff'
+            }
+        }, function (error) {
+            if (error) console.error(error);
+            console.log('✅ QR kód vygenerován');
+        });
+
+        function downloadQR() {
+            const link = document.createElement('a');
+            link.download = 'minecraft-hodinky-qr.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            console.log('✅ QR kód stažen');
+        }
+
+        // Auto-generate při načtení
+        window.onload = function() {
+            console.log('📱 QR kód pro:', url);
+        };
+    </script>
+</body>
+</html>
