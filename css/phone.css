@@ -1,0 +1,257 @@
+/* iPhone 13 a větší telefony (390x844px) */
+
+@media (min-width: 501px) {
+    .watch {
+        width: 100vw;
+        height: 100vh;
+        max-width: 600px;
+        max-height: 600px;
+        border-radius: 50%;
+        border: 15px solid #333;
+        margin: auto;
+    }
+
+    .player {
+        width: 24px;
+        height: 32px;
+        left: 45%;
+        top: 18%;
+    }
+
+    .player-head {
+        width: 18px;
+        height: 18px;
+        left: 3px;
+    }
+
+    .player-eyes {
+        width: 3px;
+        height: 3px;
+        top: 5px;
+        left: 3px;
+        box-shadow: 8px 0 0 #000;
+    }
+
+    .player-smile {
+        width: 8px;
+        height: 2px;
+        bottom: 3px;
+        left: 5px;
+    }
+
+    .player-body {
+        width: 14px;
+        height: 16px;
+        top: 16px;
+        left: 5px;
+    }
+
+    .player-arm {
+        width: 4px;
+        height: 8px;
+        top: 17px;
+    }
+
+    .player-arm.left { left: 0; }
+    .player-arm.right { right: 0; }
+
+    .player-tool {
+        font-size: 16px;
+        right: -8px;
+        top: 14px;
+    }
+
+    .game-block {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hotbar {
+        bottom: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .hotbar-slot {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .controls {
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 120px;
+    }
+
+    .control-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+
+    .ctrl-up { left: 41px; }
+    .ctrl-right { top: 41px; }
+    .ctrl-down { left: 41px; }
+    .ctrl-left { top: 41px; }
+
+    .ctrl-center {
+        top: 43px;
+        left: 43px;
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .enemy {
+        width: 20px;
+        height: 20px;
+    }
+
+    .enemy::before {
+        width: 16px;
+        height: 16px;
+        top: -12px;
+        left: 0;
+    }
+
+    .score-panel {
+        bottom: 17%;
+        width: 280px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .score-box {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .game-over {
+        width: 320px;
+        padding: 30px;
+    }
+
+    .game-over h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .game-over p {
+        font-size: 18px;
+    }
+
+    .restart-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .blood-splatter {
+        width: 200px;
+        height: 200px;
+    }
+
+    .danger-warning {
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .block {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}
+
+/* Landscape mode pro telefony */
+@media (min-width: 501px) and (orientation: landscape) {
+    .watch {
+        max-width: 500px;
+        max-height: 500px;
+    }
+
+    .controls {
+        bottom: 5%;
+    }
+
+    .hotbar {
+        bottom: 20%;
+    }
+
+    .score-panel {
+        bottom: 12%;
+    }
+}
+
+/* Extra velké telefony (iPhone Pro Max atd.) */
+@media (min-width: 700px) {
+    .watch {
+        max-width: 700px;
+        max-height: 700px;
+        border-width: 20px;
+    }
+
+    .player {
+        width: 28px;
+        height: 38px;
+    }
+
+    .player-head {
+        width: 22px;
+        height: 22px;
+    }
+
+    .player-body {
+        width: 18px;
+        height: 20px;
+        top: 20px;
+    }
+
+    .game-block {
+        width: 35px;
+        height: 35px;
+    }
+
+    .hotbar-slot {
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+    }
+
+    .control-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
+    }
+
+    .controls {
+        width: 140px;
+        height: 140px;
+    }
+
+    .ctrl-up, .ctrl-down { left: 48px; }
+    .ctrl-left, .ctrl-right { top: 48px; }
+
+    .ctrl-center {
+        top: 50px;
+        left: 50px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .score-box {
+        font-size: 14px;
+        padding: 7px 12px;
+    }
+
+    .block {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+}

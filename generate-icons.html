@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Generátor Ikon</title>
+</head>
+<body>
+    <h1>Generátor Ikon pro Minecraft Hodinky</h1>
+    <p>Otevřete Console (F12) a klikněte na tlačítko níže</p>
+    <button onclick="generateAllIcons()">Generovat Ikony</button>
+    <div id="canvases"></div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 167, 180, 192, 384, 512];
+
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Pozadí - Minecraft bloky
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(0, 0, size, size);
+
+            // Border
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = size / 40;
+            ctx.strokeRect(0, 0, size, size);
+
+            // Minecraft krumpáč (zjednodušený)
+            ctx.fillStyle = '#666';
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const toolSize = size / 3;
+
+            // Rukojeť
+            ctx.fillRect(centerX - toolSize/8, centerY, toolSize/4, toolSize);
+
+            // Hlava krumpáče
+            ctx.fillStyle = '#888';
+            ctx.fillRect(centerX - toolSize/2, centerY - toolSize/4, toolSize, toolSize/3);
+
+            // Písmeno "M" pro Minecraft
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${size/3}px monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('M', centerX, size/10);
+
+            // Zelená tráva dole
+            ctx.fillStyle = '#7CBD3B';
+            ctx.fillRect(0, size * 0.8, size, size * 0.2);
+
+            return canvas;
+        }
+
+        function generateAllIcons() {
+            const container = document.getElementById('canvases');
+            container.innerHTML = '';
+
+            sizes.forEach(size => {
+                const canvas = generateIcon(size);
+                canvas.style.margin = '10px';
+                canvas.style.border = '2px solid #000';
+                container.appendChild(canvas);
+
+                // Download link
+                const link = document.createElement('a');
+                link.download = `icon-${size}.png`;
+                link.href = canvas.toDataURL();
+                link.textContent = `Stáhnout ${size}x${size}`;
+                link.style.display = 'block';
+                link.style.margin = '5px';
+                container.appendChild(link);
+
+                console.log(`✅ Vygenerována ikona ${size}x${size}`);
+            });
+
+            console.log('✅ Všechny ikony vygenerovány! Klikněte na odkazy pro stažení.');
+            alert('Ikony vygenerovány! Stáhněte je a umístěte do složky icons/');
+        }
+    </script>
+</body>
+</html>

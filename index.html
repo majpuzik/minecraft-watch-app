@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Minecraft Watch">
+    <meta name="theme-color" content="#222222">
+
+    <title>Minecraft Hodinky</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/watch.css" media="(max-width: 500px)">
+    <link rel="stylesheet" href="css/phone.css" media="(min-width: 501px)">
+</head>
+<body>
+    <div class="watch" id="watch">
+        <div class="game-world" id="gameWorld">
+            <div class="player" id="player">
+                <div class="player-head">
+                    <div class="player-eyes"></div>
+                    <div class="player-smile"></div>
+                </div>
+                <div class="player-body"></div>
+                <div class="player-arm left"></div>
+                <div class="player-arm right"></div>
+                <div class="player-tool" id="playerTool"></div>
+            </div>
+        </div>
+
+        <div class="danger-warning" id="dangerWarning"></div>
+
+        <div class="score-panel">
+            <div class="score-box">MAX: <span id="maxScore">0</span></div>
+            <div class="score-box">SKÓRE: <span id="score">0</span></div>
+        </div>
+
+        <div class="hotbar" id="hotbar">
+            <div class="hotbar-slot" data-tool="pickaxe">⛏️</div>
+            <div class="hotbar-slot" data-tool="axe">🪓</div>
+            <div class="hotbar-slot" data-tool="shovel">🔨</div>
+            <div class="hotbar-slot" data-tool="sword">⚔️</div>
+            <div class="hotbar-slot" data-tool="return">📦</div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn ctrl-up-left" data-dir="up-left">↖️</button>
+            <button class="control-btn ctrl-up" data-dir="up">⬆️</button>
+            <button class="control-btn ctrl-up-right" data-dir="up-right">↗️</button>
+            <button class="control-btn ctrl-right" data-dir="right">➡️</button>
+            <button class="control-btn ctrl-down-right" data-dir="down-right">↘️</button>
+            <button class="control-btn ctrl-down" data-dir="down">⬇️</button>
+            <button class="control-btn ctrl-down-left" data-dir="down-left">↙️</button>
+            <button class="control-btn ctrl-left" data-dir="left">⬅️</button>
+            <button class="control-btn ctrl-center" data-action="mine">⛏️</button>
+        </div>
+
+        <div class="game-over" id="gameOver">
+            <h1>JSI MRTVÝ! 💀</h1>
+            <p>Finální skóre: <span id="finalScore">0</span></p>
+            <p class="restart-btn" id="restartBtn">▶️ RESTART</p>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('✅ Service Worker zaregistrován'))
+                .catch(err => console.error('❌ SW Error:', err));
+        }
+    </script>
+</body>
+</html>
