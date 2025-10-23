@@ -505,19 +505,34 @@ pyramidData.forEach((row, y) => {
     });
 });
 
-// Hodinky bloky
-const clockBlockCount = isWatch ? 24 : 33;
+// Hodinky bloky - vypočítat kolik jich potřebujeme aby vyplnily celý obvod
+const watchSize = Math.min(watch.offsetWidth, watch.offsetHeight);
+const blockWidth = isWatch ? 24 : 32;
+const borderWidth = isWatch ? 5 : 15;
+
+// Radius od středu watch k středu kostičky (kostičky musí být na vnějším okraji)
+const radius = (watchSize / 2) - borderWidth - (blockWidth / 2) - 2;
+
+// Obvod kruhu
+const circumference = 2 * Math.PI * radius;
+
+// Počet kostiček - lehce překrýváme (0.85) aby byly přitlačené k sobě
+const clockBlockCount = Math.floor(circumference / (blockWidth * 0.85));
+
+// Střed watch elementu
+const centerX = watch.offsetWidth / 2;
+const centerY = watch.offsetHeight / 2;
+
 for (let i = 0; i < clockBlockCount; i++) {
     const angle = i * (360 / clockBlockCount);
     const rad = angle * Math.PI / 180;
-    const radius = Math.min(window.innerWidth, window.innerHeight) / 2 - (isWatch ? 35 : 50);
-    const x = window.innerWidth / 2 + radius * Math.cos(rad - Math.PI/2);
-    const y = window.innerHeight / 2 + radius * Math.sin(rad - Math.PI/2);
+    const x = centerX + radius * Math.cos(rad - Math.PI/2);
+    const y = centerY + radius * Math.sin(rad - Math.PI/2);
 
     const block = document.createElement('div');
     block.className = 'block';
-    block.style.left = (x - blockSize/2) + 'px';
-    block.style.top = (y - blockSize/2) + 'px';
+    block.style.left = (x - blockWidth/2) + 'px';
+    block.style.top = (y - blockWidth/2) + 'px';
     block.style.transform = `rotate(${angle}deg)`;
     watch.appendChild(block);
     blocks.push(block);
