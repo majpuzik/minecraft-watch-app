@@ -64,7 +64,7 @@
     }
 
     .hotbar {
-        bottom: 22%;
+        bottom: calc(22% + 12px); /* Posun o půlku kostičky (24px/2) nahoru */
         left: 50%;
         transform: translateX(-50%);
     }

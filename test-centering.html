@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Centrování - Porovnání</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 20px;
+            background: #222;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            gap: 40px;
+            margin: 20px;
+            flex-wrap: wrap;
+        }
+        .watch-wrapper {
+            position: relative;
+        }
+        .watch {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #87CEEB 0%, #B8E0F5 50%, #8BC34A 100%);
+            position: relative;
+            border: 15px solid #333;
+        }
+        .block {
+            position: absolute;
+            background: #8B4513;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            color: #FFF;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .crosshair {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 0, 0, 0.5);
+        }
+        .crosshair::before {
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            transform: translateX(-1px);
+        }
+        .crosshair::after {
+            top: 50%;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            transform: translateY(-1px);
+        }
+        .center-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            transform: translate(-5px, -5px);
+            z-index: 10000;
+        }
+        h2 {
+            color: #0F0;
+            text-align: center;
+        }
+        .label {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .bad { color: #F00; }
+        .good { color: #0F0; }
+        .info {
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border: 2px solid #0F0;
+            border-radius: 10px;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">🎯 TEST CENTROVÁNÍ - POROVNÁNÍ</h1>
+
+    <div class="info">
+        <strong>📊 CO TESTUJEME:</strong><br>
+        • <span class="bad">ČERVENÝ KŘÍŽ</span> = Střed watch elementu<br>
+        • <span class="bad">ČERVENÝ BOD</span> = Přesný střed<br>
+        • <span class="good">ZELENÉ BLOKY</span> = Pozice 12, 3, 6, 9 hodin<br><br>
+
+        <strong>✅ SPRÁVNÉ CENTROVÁNÍ:</strong><br>
+        Zelené bloky mají být symetricky rozmístěné kolem červeného kříže
+    </div>
+
+    <div class="container">
+        <div class="watch-wrapper">
+            <div class="label bad">❌ PŘED (blockWidth/2)</div>
+            <div class="watch" id="watch-before">
+                <div class="crosshair"></div>
+                <div class="center-dot"></div>
+            </div>
+        </div>
+
+        <div class="watch-wrapper">
+            <div class="label good">✅ PO (blockWidth)</div>
+            <div class="watch" id="watch-after">
+                <div class="crosshair"></div>
+                <div class="center-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info" id="stats"></div>
+
+    <script>
+        function generateRing(watchElement, useOldCentering) {
+            const blockWidth = 32;
+            const borderWidth = 15;
+            const watchSize = Math.min(watchElement.offsetWidth, watchElement.offsetHeight);
+            const radius = (watchSize / 2) - borderWidth - (blockWidth / 2) - 2;
+            const circumference = 2 * Math.PI * radius;
+            const blockCount = Math.floor(circumference / (blockWidth * 0.85));
+
+            const centerX = watchElement.offsetWidth / 2;
+            const centerY = watchElement.offsetHeight / 2;
+
+            // Pouze pozice 12, 3, 6, 9 hodin pro lepší viditelnost
+            const markPositions = [0, 0.25, 0.5, 0.75];
+            const markLabels = ['12', '3', '6', '9'];
+
+            markPositions.forEach((pos, idx) => {
+                const i = Math.floor(pos * blockCount);
+                const angle = i * (360 / blockCount);
+                const rad = angle * Math.PI / 180;
+                const x = centerX + radius * Math.cos(rad - Math.PI/2);
+                const y = centerY + radius * Math.sin(rad - Math.PI/2);
+
+                const block = document.createElement('div');
+                block.className = 'block';
+                block.style.width = blockWidth + 'px';
+                block.style.height = blockWidth + 'px';
+
+                if (useOldCentering) {
+                    // STARÉ centrování
+                    block.style.left = (x - blockWidth/2) + 'px';
+                    block.style.top = (y - blockWidth/2) + 'px';
+                } else {
+                    // NOVÉ centrování (posun severozápad)
+                    block.style.left = (x - blockWidth) + 'px';
+                    block.style.top = (y - blockWidth) + 'px';
+                }
+
+                block.style.transform = `rotate(${angle}deg)`;
+                block.style.background = '#00FF00';
+                block.style.fontSize = '16px';
+                block.textContent = markLabels[idx];
+
+                watchElement.appendChild(block);
+            });
+
+            return { centerX, centerY, radius, blockCount };
+        }
+
+        const statsBefore = generateRing(document.getElementById('watch-before'), true);
+        const statsAfter = generateRing(document.getElementById('watch-after'), false);
+
+        document.getElementById('stats').innerHTML = `
+            <strong class="good">📊 VÝPOČET POZICE:</strong><br><br>
+
+            <strong>Střed watch:</strong> (${statsBefore.centerX}, ${statsBefore.centerY})<br>
+            <strong>Radius kruhu:</strong> ${statsBefore.radius.toFixed(2)}px<br>
+            <strong>Velikost bloku:</strong> 32px<br>
+            <strong>Počet bloků:</strong> ${statsBefore.blockCount}<br><br>
+
+            <strong class="bad">❌ PŘED (špatně):</strong><br>
+            • left = x - blockWidth/2 = x - 16px<br>
+            • top = y - blockWidth/2 = y - 16px<br>
+            • Bloky jsou mimo střed<br><br>
+
+            <strong class="good">✅ PO (správně):</strong><br>
+            • left = x - blockWidth = x - 32px<br>
+            • top = y - blockWidth = y - 32px<br>
+            • Posun o -16px v obou směrech = severozápad<br>
+            • Bloky jsou symetricky kolem středu
+        `;
+    </script>
+</body>
+</html>

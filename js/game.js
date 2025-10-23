@@ -499,7 +499,8 @@ pyramidData.forEach((row, y) => {
         const block = document.createElement('div');
         block.className = 'game-block ' + (y === 0 ? 'grass' : y < 2 ? 'dirt' : 'stone');
         block.style.left = (x * blockSize + 20) + 'px';
-        block.style.top = (y * blockSize + window.innerHeight * 0.3) + 'px';
+        // Posun pyramidy o půlku kostičky nahoru
+        block.style.top = (y * blockSize + window.innerHeight * 0.3 - blockSize/2) + 'px';
         gameWorld.appendChild(block);
         gameBlocks.push({element: block, x: x, y: y});
     });
